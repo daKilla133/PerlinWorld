@@ -117,13 +117,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PerlinGenerator.cpp" />
     <ClCompile Include="TerrainMesh.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="PerlinGenerator.h" />
     <ClInclude Include="TerrainMesh.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Shader.h" />

@@ -36,8 +36,8 @@ void TerrainMesh::addData(float planeY, float triangleSize, int width, int heigh
 			{
 				float ySph = sqrt(rSquared - (pow(x, 2) + pow(y, 2)));
 				float ySph2 = sqrt(rSquared - (pow(x, 2) + pow(y + triangleSize, 2)));
-				positions.emplace_back(glm::vec3(x, ySph, y));
-				positions.emplace_back(glm::vec3(x, ySph2, y + triangleSize));
+				positions.emplace_back(glm::vec3(x, ySph + planeY, y));
+				positions.emplace_back(glm::vec3(x, ySph2 + planeY, y + triangleSize));
 			}
 		}
 		else
@@ -46,8 +46,8 @@ void TerrainMesh::addData(float planeY, float triangleSize, int width, int heigh
 			{
 				float ySph = sqrt(rSquared - (pow(x, 2) + pow(y, 2)));
 				float ySph2 = sqrt(rSquared - (pow(x, 2) + pow(y + triangleSize, 2)));
-				positions.emplace_back(glm::vec3(x, ySph, y));
-				positions.emplace_back(glm::vec3(x, ySph2, y + triangleSize));
+				positions.emplace_back(glm::vec3(x, ySph + planeY, y));
+				positions.emplace_back(glm::vec3(x, ySph2 + planeY, y + triangleSize));
 			}
 		}
 		yCounter++;

@@ -46,6 +46,16 @@ public:
 		return cameraLook;
 	}
 
+	glm::vec3 const& getPosition()
+	{
+		return cameraPos;
+	}
+
+	glm::vec3 const& getUp()
+	{
+		return cameraUp;
+	}
+
 	void updatePosition(glm::vec3 const& pos)
 	{
 		cameraPos = pos;
