@@ -13,7 +13,7 @@ int main()
 	TerrainMesh mesh;
 	Camera cam(1);
 
-	mesh.addData(-2.f, 0.4f, 60, 60);
+	mesh.addData(-2.f, 0.6f, 60, 60);
 	
 
 

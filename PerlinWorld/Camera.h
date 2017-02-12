@@ -1,6 +1,7 @@
 #pragma once
 #include <glm\glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtx/rotate_vector.hpp>
 
 class Camera
 {
@@ -17,9 +18,9 @@ private:
 public:
 	Camera(float aspect)
 	{
-		cameraUp = glm::vec3(0, 0, 1);
-		cameraLook = glm::vec3(0, -1, 0);
-		cameraPos = glm::vec3(0, 40, 0);
+		cameraUp = glm::vec3(0, 1, 0);
+		cameraLook = glm::vec3(0, 0, -1);
+		cameraPos = glm::vec3(0, 0, 0);
 		perspective = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 1000.0f);
 		recacheMVP();
 	}
