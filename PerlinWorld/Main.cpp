@@ -13,23 +13,7 @@ int main()
 	TerrainMesh mesh;
 	Camera cam(1);
 
-	std::vector<glm::vec3> pos;
-	std::vector<unsigned int> ind;
-	std::vector<glm::vec2> uvs;
-
-	pos.emplace_back(glm::vec3(-1, -1, 5));
-	pos.emplace_back(glm::vec3(1, -1, 5));
-	pos.emplace_back(glm::vec3(-1, 1, 5));
-
-	ind.emplace_back(0);
-	ind.emplace_back(1);
-	ind.emplace_back(2);
-
-	uvs.emplace_back(glm::vec2(0, 0));
-	uvs.emplace_back(glm::vec2(1, 0));
-	uvs.emplace_back(glm::vec2(0, 1));
-
-	mesh.addData(pos, ind, uvs, false);
+	mesh.addData(-2.f, 0.4f, 60, 60);
 	
 
 

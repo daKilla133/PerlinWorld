@@ -10,29 +10,42 @@ TerrainMesh::TerrainMesh()
 	
 }
 
+bool FlLEQ(float lhs, float rhs, double tolerance)
+{
+	return (lhs < rhs) || (abs(lhs - rhs) < tolerance);
+}
+
+bool FlGEQ(float lhs, float rhs, double tolerance)
+{
+	return (lhs > rhs) || (abs(lhs - rhs) < tolerance);
+}
+
 void TerrainMesh::addData(float planeY, float triangleSize, int width, int height)
 {
 	std::vector<unsigned int> indices;
 	std::vector<glm::vec3> positions;
 
-	for (int yCounter = 0, float y = -(triangleSize * height) / 2; y < (triangleSize * height) / 2; y += triangleSize, yCounter++)
+	int yCounter = 0;
+	for (float y = -(triangleSize * height) / 2; y < (triangleSize * height) / 2; y += triangleSize)
 	{
+		float x;
 		if (yCounter % 2 == 0)
 		{
-			for (float x = -(triangleSize * width) / 2; x <= (triangleSize * width) / 2; x += triangleSize)
+			for (x = -(triangleSize * width) / 2; FlLEQ(x, (triangleSize * width) / 2, 0.00001); x += triangleSize)
 			{
-				positions.emplace_back(new glm::vec3(x, planeY, y));
-				positions.emplace_back(new glm::vec3(x, planeY, y + triangleSize));
+				positions.emplace_back(glm::vec3(x, planeY, y));
+				positions.emplace_back(glm::vec3(x, planeY, y + triangleSize));
 			}
 		}
 		else
 		{
-			for (float x = (triangleSize * width) / 2;  x >= -(triangleSize * width) / 2; x -= triangleSize)
+			for (x = (triangleSize * width) / 2;  FlGEQ(x, -(triangleSize * width) / 2, 0.00001); x -= triangleSize)
 			{
-				positions.emplace_back(new glm::vec3(x, planeY, y));
-				positions.emplace_back(new glm::vec3(x, planeY, y + triangleSize));
+				positions.emplace_back(glm::vec3(x, planeY, y));
+				positions.emplace_back(glm::vec3(x, planeY, y + triangleSize));
 			}
 		}
+		yCounter++;
 	}
 
 	for (int a = 0; a < positions.size(); a++)
@@ -65,11 +78,7 @@ void TerrainMesh::draw()
 	glBindVertexArray(VAO);
 
 	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 
 	glDrawElements(GL_TRIANGLE_STRIP, size, GL_UNSIGNED_INT, 0);
 
