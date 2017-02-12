@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "Mesh.h"
+#include "TerrainMesh.h"
 #include "Shader.h"
 #include "Camera.h"
 #include <GLFW\glfw3.h>
@@ -7,10 +7,10 @@
 #include <glm\gtx\rotate_vector.hpp>
 int main()
 {
-	Window win(600, 600, "nigqr");
+	Window win(600, 600, "nigr");
 	win.showit();
 	BasicShader s;
-	Mesh mesh;
+	TerrainMesh mesh;
 	Camera cam(1);
 
 	std::vector<glm::vec3> pos;
