@@ -38,12 +38,8 @@ void TerrainMesh::addData(float planeY, float triangleSize, int width, int heigh
 		{
 			for (x = -(triangleSize * width) / 2; FlLEQ(x, (triangleSize * width) / 2, 0.00001); x += triangleSize)
 			{
-				float centerDist = sqrt(pow(x, 2) + pow(y, 2));
-				float centerDist2 = sqrt(pow(x, 2) + pow(y + triangleSize, 2));
-				float ySph = 0 * sign * glm::sin(centerDist * 2.3);//sign * 0 * sqrt(max(0, rSquared - (pow(x, 2) + pow(y, 2))));
-				float ySph2 = 0 * sign * glm::sin(centerDist2 * 2.3);//sign * 0 * sqrt(max(0, rSquared - (pow(x, 2) + pow(y + triangleSize, 2))));
-				positions.emplace_back(glm::vec3(x, ySph + planeY, y));
-				positions.emplace_back(glm::vec3(x, ySph2 + planeY, y + triangleSize));
+				positions.emplace_back(glm::vec3(x, planeY, y));
+				positions.emplace_back(glm::vec3(x, planeY, y + triangleSize));
 				UVs.emplace_back(glm::vec2(
 					glm::clamp((x + ((triangleSize * width) / 2)) / (triangleSize * width), 0.f, 1.f),
 					glm::clamp((y + ((triangleSize * height) / 2)) / (triangleSize * height), 0.f, 1.f)));
@@ -57,12 +53,8 @@ void TerrainMesh::addData(float planeY, float triangleSize, int width, int heigh
 			for (x = (triangleSize * width) / 2;  FlGEQ(x, -(triangleSize * width) / 2, 0.00001); x -= triangleSize)
 			{
 
-				float centerDist = sqrt(pow(x, 2) + pow(y, 2));
-				float centerDist2 = sqrt(pow(x, 2) + pow(y + triangleSize, 2));
-				float ySph = 0 * sign * glm::sin(centerDist * 2.3);//sign * 0 * sqrt(max(0, rSquared - (pow(x, 2) + pow(y, 2))));
-				float ySph2 = 0 * sign * glm::sin(centerDist2 * 2.3);//sign * 0 * sqrt(max(0, rSquared - (pow(x, 2) + pow(y + triangleSize, 2))));
-				positions.emplace_back(glm::vec3(x, ySph + planeY, y));
-				positions.emplace_back(glm::vec3(x, ySph2 + planeY, y + triangleSize));
+				positions.emplace_back(glm::vec3(x, planeY, y));
+				positions.emplace_back(glm::vec3(x, planeY, y + triangleSize));
 				UVs.emplace_back(glm::vec2(
 					glm::clamp((x + ((triangleSize * width) / 2)) / (triangleSize * width), 0.f, 1.f),
 					glm::clamp((y + ((triangleSize * height) / 2)) / (triangleSize * height), 0.f, 1.f)));
