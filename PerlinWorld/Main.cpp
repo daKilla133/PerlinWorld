@@ -9,7 +9,7 @@
 #include "PerlinGenerator.h"
 #include "Texture.h"
 
-const float scalar = .5;
+const float scalar = .05;
 static bool pressed = false;
 #pragma region hi
 void cbone(Camera& cam, int kc, int act)
@@ -96,6 +96,49 @@ void cbthree(Camera& cam, int bc, int act)
 		pressed = false;
 	}
 }
+
+void inputTick(InputManager& inputManager)
+{
+	Camera& cam = *inputManager.getCamera();
+	int w = inputManager.getKeyStates()[GLFW_KEY_W], a = inputManager.getKeyStates()[GLFW_KEY_A],
+		s = inputManager.getKeyStates()[GLFW_KEY_S], d = inputManager.getKeyStates()[GLFW_KEY_D];
+	
+	if(w & 3)
+	{
+		glm::vec3 pos = cam.getPosition();
+		glm::vec3 dir = cam.getLook();
+		dir *= scalar;
+		pos += dir;
+		cam.updatePosition(pos);
+	}
+	if (a & 3)
+	{
+		glm::vec3 pos = cam.getPosition();
+		glm::vec3 up = cam.getUp();
+		glm::vec3 dir = cam.getLook();
+		dir *= scalar;
+		dir = glm::normalize(glm::cross(dir, up)) * -scalar;
+		pos += dir;
+		cam.updatePosition(pos);
+	}
+	if (s & 3)
+	{
+		glm::vec3 pos = cam.getPosition();
+		glm::vec3 dir = cam.getLook();
+		dir *= scalar;
+		pos -= dir;
+		cam.updatePosition(pos);
+	}
+	if (d & 3)
+	{
+		glm::vec3 pos = cam.getPosition();
+		glm::vec3 up = cam.getUp();
+		glm::vec3 dir = cam.getLook();
+		dir = glm::normalize(glm::cross(dir, up)) * scalar;
+		pos += dir;
+		cam.updatePosition(pos);
+	}
+}
 #pragma endregion bye
 
 int main()
@@ -111,13 +154,14 @@ int main()
 	
 	/*
 	PerlinGenerator noise();*/
-	initInput(win.getWindow(), &cam);
+	InputManager::initialize(win.getWindow(), &cam);
+	InputManager& manager = InputManager::getInputManager();
 
-	RegisterKCB(cbone);
-	RegisterCCB(cbtwo);
-	RegisterMCB(cbthree);
+//	manager.registerKCB(cbone);
+	manager.registerCCB(cbtwo);
+	manager.registerMCB(cbthree);
 
-	mesh.addData(-2.f, 0.6f, 30, 30, 1);
+	mesh.addData(-2.f, 0.6f, 300, 300, 1);
 	mesh2.addData(-2.f, 0.6f, 30, 30, -1);
 	
 
@@ -126,11 +170,11 @@ int main()
 	{
 		win.clear();
 		glfwPollEvents();
-		
+		inputTick(manager);
 		s.bind();
 		s.updateUniforms(cam.getMVP() * mesh.getModel(), t);
 		mesh.draw();
-		mesh2.draw();
+	//	mesh2.draw();
 
 
 		win.update();

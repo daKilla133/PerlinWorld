@@ -11,5 +11,6 @@ out vec2 texCoord;
 void main()
 {
 	texCoord = tc;
-	gl_Position = transform * vec4(position, 1.0f);
+	vec3 positionYChange = vec3(position.x, position.y + 4*sin(16 * 3.1415 * length(tc - vec2(0.5, 0.5))), position.z);
+	gl_Position = transform * vec4(positionYChange, 1.0f);
 }
