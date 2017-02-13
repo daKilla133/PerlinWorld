@@ -15,10 +15,10 @@ private:
 	glm::mat4 model;
 public:
 	TerrainMesh();
-	void addData(float planeY, float triangleSize, int width, int height);
+	void addData(float planeY, float triangleSize, int width, int height, float sign);
 	void draw();
 
 	glm::mat4& getModel() { return model; }
 private:
-	GLfloat* generateDataMatrix(std::vector<glm::vec3>& positions);
+	GLfloat* generateDataMatrix(std::vector<glm::vec3>& positions, std::vector<glm::vec2>& UVs);
 };

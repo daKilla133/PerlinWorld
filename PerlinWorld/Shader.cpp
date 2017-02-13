@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include "Texture.h"
 //adharsh to that 
 std::string read_file(const char* filepath)
 {
@@ -224,14 +225,20 @@ BasicShader::BasicShader()
 	compileShader();
 }
 
-void BasicShader::updateUniforms(glm::mat4& projectionMatrix/*, Texture& texture*/)
+void BasicShader::updateUniforms(glm::mat4& projectionMatrix, Texture& texture)
 {
-	//if (texture.hasImage())
-	//	texture.bind();
+	if (texture.hasImage())
+		texture.bind();
 	//else
 	//	texture.unbind();
 
 	setUniformMat4("transform", projectionMatrix);
-	//setUniform4f("color", texture.getColor());
+	setUniform1i("usingColor", 0);
+}
 
+void BasicShader::updateUniforms(glm::mat4& projectionMatrix, glm::vec4 const& color)
+{
+	setUniformMat4("transform", projectionMatrix);
+	setUniform4f("color", color);
+	setUniform1i("usingColor", 1);
 }

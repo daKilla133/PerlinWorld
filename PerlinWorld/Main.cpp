@@ -7,10 +7,11 @@
 #include <glm\gtx\rotate_vector.hpp>
 #include "Input.h"
 #include "PerlinGenerator.h"
+#include "Texture.h"
 
 const float scalar = .5;
 static bool pressed = false;
-
+#pragma region hi
 void cbone(Camera& cam, int kc, int act)
 {
 	if (act == GLFW_PRESS || act == GLFW_REPEAT)
@@ -73,8 +74,9 @@ void cbtwo(Camera& cam, double x, double y)
 
 		glm::vec3 look = cam.getLook();
 
-		look = glm::rotateY(look, (float)glm::radians(dx/8));
-		look = glm::rotateX(look, (float)glm::radians(dy/8));
+		look = glm::rotateY(look, (float)glm::radians(-dx/8));
+		look = glm::rotate(look, (float)glm::radians(-dy / 8), glm::normalize(glm::cross(look, cam.getUp())));
+		//look = glm::rotateX(look, (float)glm::radians(dy/8));
 
 		cam.updateLook(look);
 	}
@@ -94,6 +96,7 @@ void cbthree(Camera& cam, int bc, int act)
 		pressed = false;
 	}
 }
+#pragma endregion bye
 
 int main()
 {
@@ -102,7 +105,11 @@ int main()
 	
 	BasicShader s;
 	TerrainMesh mesh;
-	Camera cam(1);/*
+	TerrainMesh mesh2;
+	Camera cam(1);
+	Texture t("res/texture/dad.png", glm::vec4(0, 0, 0, 0));
+	
+	/*
 	PerlinGenerator noise();*/
 	initInput(win.getWindow(), &cam);
 
@@ -110,7 +117,8 @@ int main()
 	RegisterCCB(cbtwo);
 	RegisterMCB(cbthree);
 
-	mesh.addData(-2.f, 0.6f, 300, 300);
+	mesh.addData(-2.f, 0.6f, 30, 30, 1);
+	mesh2.addData(-2.f, 0.6f, 30, 30, -1);
 	
 
 
@@ -120,8 +128,9 @@ int main()
 		glfwPollEvents();
 		
 		s.bind();
-		s.updateUniforms(cam.getMVP() * mesh.getModel());
+		s.updateUniforms(cam.getMVP() * mesh.getModel(), t);
 		mesh.draw();
+		mesh2.draw();
 
 
 		win.update();

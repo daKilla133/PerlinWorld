@@ -5,6 +5,8 @@
 #include <glew\glew.h>
 #include <glm\glm.hpp>
 
+class Texture;
+
 class Shader
 {
 private:
@@ -41,5 +43,6 @@ class BasicShader : public Shader
 {
 public:
 	BasicShader();
-	void updateUniforms(glm::mat4& projectionMatrix/*, Texture& texture*/);
+	void updateUniforms(glm::mat4& projectionMatrix, Texture& texture);
+	void updateUniforms(glm::mat4& projectionMatrix, glm::vec4 const& color);
 };
