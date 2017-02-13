@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include "Texture.h"
+#include <Windows.h>
 //adharsh to that 
 std::string read_file(const char* filepath)
 {
@@ -231,9 +232,11 @@ void BasicShader::updateUniforms(glm::mat4& projectionMatrix, Texture& texture)
 		texture.bind();
 	//else
 	//	texture.unbind();
-
+	static long counter = 0;
+	counter++;
 	setUniformMat4("transform", projectionMatrix);
 	setUniform1i("usingColor", 0);
+	setUniform1f("time", ((float)counter) / 100.0f);
 }
 
 void BasicShader::updateUniforms(glm::mat4& projectionMatrix, glm::vec4 const& color)
@@ -241,4 +244,5 @@ void BasicShader::updateUniforms(glm::mat4& projectionMatrix, glm::vec4 const& c
 	setUniformMat4("transform", projectionMatrix);
 	setUniform4f("color", color);
 	setUniform1i("usingColor", 1);
+	setUniform1f("time", (float)GetTickCount() / 10000.0f);
 }
