@@ -179,8 +179,8 @@ int main()
 	TerrainMesh mesh2;
 	Camera cam(1);
 	PerlinGenerator noise;
-	//Texture t(noise/*"res/texture/dad.png", glm::vec4(0, 0, 0, 0)*/);
-	Texture t2("res/texture/fuck3.png", glm::vec4(0, 0, 0, 0));
+	Texture t(/*noise*/"res/texture/dad.png", glm::vec4(0, 0, 0, 0));
+	//Texture t2("res/texture/fuck3.png", glm::vec4(0, 0, 0, 0));
 	
 	
 	
