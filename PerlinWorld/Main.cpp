@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "PerlinGenerator.h"
 #include "Texture.h"
+#include <sstream>
 
 const float scalar = .05;
 static bool pressed = false;
@@ -141,8 +142,35 @@ void inputTick(InputManager& inputManager)
 }
 #pragma endregion bye
 
+#include <fstream>
+
+void createPPM()
+{
+	string ppmString = "P3\n512 512\n255\n";
+	std::ostringstream ppmStream;
+	PerlinGenerator noise;
+	double min = 0, max = 0;
+	for (int a = 0; a < 512; a++)
+	{
+		for (int b = 0; b < 512; b++)
+		{
+			double perlinValue =  255 * (((noise.noise(((double)b / 48.0f), ((double)a / 48.0f)) + 1) / 2));
+			//BYTE color = glm::clamp<BYTE>(perlinValue, 0x00, 0xFF);
+			ppmStream << perlinValue << " " << perlinValue << " " << perlinValue << " ";
+		}
+		ppmStream << "\n";
+	}
+	ppmString += ppmStream.str();
+	std::fstream file;
+	file.open("D:\\pictures\\example.ppm", std::fstream::out);
+	file << ppmString;
+	file.close();
+}
+
 int main()
 {
+	//createPPM();
+	//return 1;
 	Window win(1200, 800, "nigr");
 	win.showit();
 	
@@ -150,10 +178,12 @@ int main()
 	TerrainMesh mesh;
 	TerrainMesh mesh2;
 	Camera cam(1);
-	Texture t("res/texture/dad.png", glm::vec4(0, 0, 0, 0));
+	PerlinGenerator noise;
+	//Texture t(noise/*"res/texture/dad.png", glm::vec4(0, 0, 0, 0)*/);
+	Texture t2("res/texture/fuck3.png", glm::vec4(0, 0, 0, 0));
 	
-	/*
-	PerlinGenerator noise();*/
+	
+	
 	InputManager::initialize(win.getWindow(), &cam);
 	InputManager& manager = InputManager::getInputManager();
 
@@ -161,7 +191,7 @@ int main()
 	manager.registerCCB(cbtwo);
 	manager.registerMCB(cbthree);
 
-	mesh.addData(-2.f, 0.6f, 300, 300, 1);
+	mesh.addData(-2.f, 0.6f, 900, 900, 1);
 	mesh2.addData(-2.f, 0.6f, 30, 30, -1);
 	
 
@@ -172,7 +202,7 @@ int main()
 		glfwPollEvents();
 		inputTick(manager);
 		s.bind();
-		s.updateUniforms(cam.getMVP() * mesh.getModel(), t);
+		s.updateUniforms(cam.getMVP() * mesh.getModel(), t2);
 		mesh.draw();
 	//	mesh2.draw();
 

@@ -3,6 +3,8 @@
 #include "Resource.h"
 #include <glm\glm.hpp>
 
+class PerlinGenerator;
+
 class Texture
 {
 private:
@@ -17,6 +19,7 @@ private:
 	GLuint load();
 public:
 	Texture(const string& path, glm::vec4& color);
+	Texture(PerlinGenerator& noise);
 	Texture(const string& path, glm::vec4& c, float specularIntensity, float specularExponent);
 	~Texture();
 	void bind();
