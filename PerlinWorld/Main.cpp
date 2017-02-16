@@ -10,7 +10,7 @@
 #include "Texture.h"
 #include <sstream>
 
-const float scalar = .05;
+const float scalar = .5;
 static bool pressed = false;
 #pragma region hi
 void cbone(Camera& cam, int kc, int act)
@@ -176,10 +176,10 @@ int main()
 	
 	BasicShader s;
 	TerrainMesh mesh;
-	TerrainMesh mesh2;
+	//TerrainMesh mesh2;
 	Camera cam(1);
 	PerlinGenerator noise;
-	Texture t(/*noise*/"res/texture/dad.png", glm::vec4(0, 0, 0, 0));
+	Texture t(/*noise*/"C:/Users/adamkelemen/Pictures/Camera Roll/wang.jpg", glm::vec4(0, 0, 0, 0));
 	//Texture t2("res/texture/fuck3.png", glm::vec4(0, 0, 0, 0));
 	
 	
@@ -192,7 +192,7 @@ int main()
 	manager.registerMCB(cbthree);
 
 	mesh.addData(-2.f, 0.6f, 900, 900, 1);
-	mesh2.addData(-2.f, 0.6f, 30, 30, -1);
+	//mesh2.addData(-2.f, 0.6f, 30, 30, -1);
 	
 
 
@@ -202,7 +202,7 @@ int main()
 		glfwPollEvents();
 		inputTick(manager);
 		s.bind();
-		s.updateUniforms(cam.getMVP() * mesh.getModel(), t2);
+		s.updateUniforms(cam.getMVP() * mesh.getModel(), t);
 		mesh.draw();
 	//	mesh2.draw();
 
