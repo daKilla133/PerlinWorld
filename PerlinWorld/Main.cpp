@@ -154,9 +154,16 @@ void createPPM()
 	{
 		for (int b = 0; b < 512; b++)
 		{
-			double perlinValue =  255 * (((noise.noise(((double)b / 48.0f), ((double)a / 48.0f)) + 1) / 2));
+			double nx = ((double)b / 64.0);
+			double ny = ((double)a / 64.0);
+			double perlinValue = (noise.noise(nx, ny) + 1) / 2;
+			double perlinValue2 =  0.5 * (noise.noise(nx * 2, ny * 2) + 1) / 2;
+			double perlinValue3 = 0.25 * (noise.noise(nx * 4, ny * 2) + 1) / 2;
+			double perlinFinal = glm::clamp((perlinValue + perlinValue2 + perlinValue3) / 2.0, 0.0, 1.0);
+			perlinFinal = pow(perlinFinal, 2.5) * 255.0;
+
 			//BYTE color = glm::clamp<BYTE>(perlinValue, 0x00, 0xFF);
-			ppmStream << perlinValue << " " << perlinValue << " " << perlinValue << " ";
+			ppmStream << perlinFinal << " " << perlinFinal << " " << perlinFinal << " ";
 		}
 		ppmStream << "\n";
 	}
@@ -169,8 +176,8 @@ void createPPM()
 
 int main()
 {
-	//createPPM();
-	//return 1;
+//	createPPM();
+//	return 1;
 	Window win(1200, 800, "nigr");
 	win.showit();
 	
@@ -179,7 +186,7 @@ int main()
 	//TerrainMesh mesh2;
 	Camera cam(1);
 	PerlinGenerator noise;
-	Texture t(/*noise*/"C:/Users/adamkelemen/Pictures/Camera Roll/wang.jpg", glm::vec4(0, 0, 0, 0));
+	Texture t(/*noise*/"res/texture/fuck.png", glm::vec4(0, 0, 0, 0));
 	//Texture t2("res/texture/fuck3.png", glm::vec4(0, 0, 0, 0));
 	
 	
@@ -191,7 +198,7 @@ int main()
 	manager.registerCCB(cbtwo);
 	manager.registerMCB(cbthree);
 
-	mesh.addData(-2.f, 0.6f, 900, 900, 1);
+	mesh.addData(-2.f, 0.6f, 300, 300, 1);
 	//mesh2.addData(-2.f, 0.6f, 30, 30, -1);
 	
 
